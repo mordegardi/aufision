@@ -51,9 +51,9 @@ SamplePlayer::SamplePlayer(QWidget *parent)
     connect(player, SIGNAL(volumeChanged(int)), controls, SLOT(setVolume(int)));
     connect(player, SIGNAL(mutedChanged(bool)), controls, SLOT(setMuted(bool)));
 
-    trackInfo = new QLabel;
-    albumInfo = new QLabel;
-    authorInfo = new QLabel;
+    trackInfo = new QLabel(this);
+    albumInfo = new QLabel(this);
+    authorInfo = new QLabel(this);
 
     menuBar = new QMenuBar(this);
     fileMenu = new QMenu("File...");
@@ -68,7 +68,6 @@ SamplePlayer::SamplePlayer(QWidget *parent)
 
     menuBar->addMenu(fileMenu);
     menuBar->addMenu(aboutMenu);
-    menuBar->setParent(this);
 
     menuBar->show();
 
@@ -90,12 +89,6 @@ SamplePlayer::SamplePlayer(QWidget *parent)
     mainLayout->addLayout(progressLayout);
 
     setLayout(mainLayout);
-
-    metaDataChanged();
-
-    if (player->isMetaDataAvailable()) {
-        qDebug() << "WORKS!";
-    }
 
 }
 
@@ -127,9 +120,9 @@ void SamplePlayer::jump(const QModelIndex &index)
 void SamplePlayer::metaDataChanged()
 {
     if (player->isMetaDataAvailable()) {
-        authorInfo->setText("Author: " + player->metaData(QMediaMetaData::Author).toString());
-        albumInfo->setText("Album: " + player->metaData(QMediaMetaData::AlbumTitle).toString());
-        trackInfo->setText("Track: " + player->metaData(QMediaMetaData::Title).toString());
+        authorInfo->setText(player->metaData(QMediaMetaData::Author).toString());
+        albumInfo->setText(player->metaData(QMediaMetaData::AlbumTitle).toString());
+        trackInfo->setText(player->metaData(QMediaMetaData::Title).toString());
     }
 }
 
