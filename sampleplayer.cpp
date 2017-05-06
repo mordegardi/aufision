@@ -60,10 +60,9 @@ SamplePlayer::SamplePlayer(QWidget *parent)
     aboutMenu = new QMenu("About");
 
     fileMenu->addAction("Open file(s)", this, SLOT(open()), Qt::CTRL + Qt::Key_O);
-
     fileMenu->addSeparator();
-
     fileMenu->addAction("Exit", qApp, SLOT(quit()), Qt::CTRL + Qt::Key_Q);
+
     aboutMenu->addAction("About Qt", this, SLOT(aboutQt()), Qt::ALT + Qt::Key_A);
 
     menuBar->addMenu(fileMenu);
@@ -82,13 +81,18 @@ SamplePlayer::SamplePlayer(QWidget *parent)
     progressLayout->addWidget(slider);
     progressLayout->addWidget(labelDuration);
 
-    mainLayout->addSpacing(10);
+    mainLayout->addSpacing(15);
     mainLayout->addLayout(mediaInfoLayout);
     mainLayout->addWidget(playlistView);
     mainLayout->addWidget(controls);
     mainLayout->addLayout(progressLayout);
 
     setLayout(mainLayout);
+
+    QFile file("styles/dark.qss");
+    file.open(QFile::ReadOnly);
+    QString css = QLatin1String(file.readAll());
+    qApp->setStyleSheet(css);
 
 }
 
@@ -120,9 +124,9 @@ void SamplePlayer::jump(const QModelIndex &index)
 void SamplePlayer::metaDataChanged()
 {
     if (player->isMetaDataAvailable()) {
-        authorInfo->setText(player->metaData(QMediaMetaData::Author).toString());
-        albumInfo->setText(player->metaData(QMediaMetaData::AlbumTitle).toString());
-        trackInfo->setText(player->metaData(QMediaMetaData::Title).toString());
+        authorInfo->setText("Author: " + player->metaData(QMediaMetaData::Author).toString());
+        albumInfo->setText("Album: " + player->metaData(QMediaMetaData::AlbumTitle).toString());
+        trackInfo->setText("Track: " + player->metaData(QMediaMetaData::Title).toString());
     }
 }
 
@@ -146,8 +150,8 @@ void SamplePlayer::updateDurationInfo(qint64 currentInfo)
 {
     QString tStr;
     if (currentInfo || duration) {
-        QTime currentTime((currentInfo/3600)%60, (currentInfo/60)%60, currentInfo%60, (currentInfo*1000)%1000);
-        QTime totalTime((duration/3600)%60, (duration/60)%60, duration%60, (duration*1000)%1000);
+        QTime currentTime((currentInfo / 3600) % 60, (currentInfo / 60) % 60, currentInfo % 60, (currentInfo * 1000) % 1000);
+        QTime totalTime((duration / 3600) % 60, (duration / 60) % 60, duration % 60, (duration * 1000) % 1000);
         QString format = "mm:ss";
         if (duration > 3600)
             format = "hh:mm:ss";
