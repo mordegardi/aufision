@@ -27,6 +27,7 @@ signals:
     void previous();
     void changeVolume(int volume);
     void changeMuting(bool muting);
+    void valueChanged(int);
 
 private slots:
     void playClicked();
