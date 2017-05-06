@@ -7,7 +7,8 @@ int main(int argc, char *argv[])
 
     SamplePlayer player;
     player.setWindowTitle("SamplePlayer v0.1.0");
-    player.setMinimumSize(QSize(350, 300));
+    player.setMinimumSize(QSize(450, 300));
+
     player.show();
 
     return app.exec();
