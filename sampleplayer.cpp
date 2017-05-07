@@ -98,10 +98,14 @@ SamplePlayer::SamplePlayer(QWidget *parent)
 
 void SamplePlayer::open()
 {
-
+    QList<QUrl> urls;
     QFileDialog fileDialog(this);
+
     fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    QList<QUrl> urls = fileDialog.getOpenFileUrls(0, "Select file(s)", QDir::rootPath(), "MP3 files (*.mp3)");
+    fileDialog.setFileMode(QFileDialog::ExistingFiles);
+
+    if (fileDialog.exec() == QFileDialog::Accepted)
+        urls = fileDialog.selectedUrls();
 
     foreach (QUrl url, urls) {
         addToPlaylist(url);
