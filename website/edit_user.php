@@ -89,6 +89,10 @@ try {
 	$s->execute();
 
 	$_SESSION['username'] = $username;
+	$_SESSION['email'] = $email;
+	$_SESSION['password'] = $password;
+	$_SESSION['age'] = $age;
+	$_SESSION['gender'] = $gender;
 	$_SESSION['avatar'] = $avatarname;
 
 } catch (PDOException $e) {
