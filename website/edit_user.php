@@ -11,16 +11,23 @@ include 'includes/utils.inc.php';
 
 if (isset($_POST['username']) && !empty($_POST['username']))
 	$username = makeIfSafe($_POST['username']);
+else
+	$username = $_SESSION['username'];
 
-if (isset($_POST['email']) && !empty($_POST['email'])) {
+if (isset($_POST['email']) && !empty($_POST['email']))
 	$email = makeIfSafe($_POST['email']);
-}
+else
+	$email = $_SESSION['email'];
 
 if (isset($_POST['password']) && !empty($_POST['password']))
 	$password = md5(makeIfSafe($_POST['password']) . 'donthackme');
+else
+	$password = $_SESSION['password'];
 
 if (isset($_POST['age']) && !empty($_POST['age']))
 	$age = (int) makeIfSafe($_POST['age']);
+else
+	$age = $_SESSION['age'];
 
 if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
 
@@ -40,12 +47,10 @@ if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
 		$avatarname = $_FILES['avatar']['name'];
 	}
 
-}
+} else
+	$avatarname = $_SESSION['avatar'];
 
-
-if (isset($_POST['gender']) && !empty($_POST['gender'])) {
-	$gender = $_POST['gender'];
-}
+$gender = $_SESSION['gender'];
 
 include 'includes/db.inc.php';
 
