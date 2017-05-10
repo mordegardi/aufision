@@ -36,6 +36,7 @@ if (!$result) {
 		$_SESSION['username'] = $result['username'];
 		$_SESSION['email'] = $result['email'];
 		$_SESSION['age'] = $result['age'];
+		$_SESSION['password'] = $result['password'];
 		$_SESSION['gender'] = $result['gender'];
 		$_SESSION['avatar'] = $result['avatar'];
 	} else {
